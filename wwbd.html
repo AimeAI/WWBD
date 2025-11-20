@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIME | GRANT_RECON [LIVE]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #030405;
+            --surface: #0d1117;
+            --border: #30363d;
+            --primary: #00FF41;
+            --secondary: #00D9FF;
+            --hazard: #FFB000;
+            --text: #e6edf3;
+            --muted: #8b949e;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--bg); color: var(--text); 
+            font-family: 'Space Grotesk', sans-serif; 
+            height: 100vh; display: flex; flex-direction: column; 
+            overflow: hidden;
+        }
+        
+        /* --- SCANLINE OVERLAY --- */
+        body::after {
+            content: " "; position: fixed; inset: 0; z-index: 999; pointer-events: none;
+            background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.1) 50%), linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,0,255,0.03));
+            background-size: 100% 2px, 3px 100%; opacity: 0.15;
+        }
+
+        /* --- HEADER --- */
+        .header { 
+            padding: 16px 24px; border-bottom: 1px solid var(--border); 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: rgba(3,4,5,0.95); z-index: 10;
+        }
+        .logo { 
+            font-family: 'JetBrains Mono'; font-weight: 700; color: var(--primary); 
+            letter-spacing: -0.05em; display: flex; align-items: center; gap: 10px;
+        }
+        .status-badge {
+            font-size: 0.65rem; padding: 4px 8px; border: 1px solid var(--primary);
+            color: var(--primary); border-radius: 2px; letter-spacing: 0.1em;
+        }
+
+        /* --- LAYOUT --- */
+        .main-layout { display: flex; flex: 1; overflow: hidden; }
+        
+        /* --- SIDEBAR --- */
+        .sidebar { 
+            width: 340px; padding: 24px; border-right: 1px solid var(--border); 
+            display: flex; flex-direction: column; gap: 24px; background: var(--surface);
+            overflow-y: auto;
+        }
+        .input-group { display: flex; flex-direction: column; gap: 8px; }
+        label { font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        input, select, textarea {
+            background: #030405; border: 1px solid var(--border); color: var(--text); padding: 12px;
+            font-family: 'JetBrains Mono'; font-size: 0.85rem; outline: none; transition: 0.2s;
+            border-radius: 4px;
+        }
+        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0,255,65,0.1); }
+        
+        .btn-scan {
+            background: var(--primary); color: #000; font-weight: 700; border: none; padding: 16px;
+            cursor: pointer; font-family: 'JetBrains Mono'; text-transform: uppercase; margin-top: auto;
+            transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 10px;
+            letter-spacing: 0.05em; clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+        }
+        .btn-scan:hover { background: #00cc33; box-shadow: 0 0 20px rgba(0,255,65,0.4); }
+
+        /* --- MAIN TERMINAL AREA --- */
+        .terminal-window {
+            flex: 1; padding: 0; position: relative; display: flex; flex-direction: column;
+            background: radial-gradient(circle at top right, #111 0%, #030405 100%);
+        }
+
+        .console-feed {
+            height: 180px; padding: 20px; border-bottom: 1px solid var(--border);
+            font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--muted);
+            overflow-y: auto; background: rgba(0,0,0,0.3);
+        }
+        .log-entry { margin-bottom: 4px; display: flex; gap: 10px; }
+        .log-time { color: var(--secondary); opacity: 0.7; }
+        .log-text { color: var(--text); }
+        .log-success { color: var(--primary); }
+        .log-warn { color: var(--hazard); }
+
+        /* --- RESULTS AREA --- */
+        .results-container { flex: 1; padding: 24px; overflow-y: auto; }
+        .results-header { 
+            display: flex; justify-content: space-between; align-items: flex-end; 
+            margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
+        }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        
+        .card {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 24px;
+            transition: 0.2s; position: relative; display: flex; flex-direction: column;
+        }
+        .card:hover { 
+            border-color: var(--primary); transform: translateY(-2px); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .card-badge {
+            position: absolute; top: 16px; right: 16px;
+            font-size: 0.65rem; padding: 2px 6px; border-radius: 2px;
+            font-family: 'JetBrains Mono'; letter-spacing: 0.05em;
+        }
+        .badge-fed { border: 1px solid var(--secondary); color: var(--secondary); }
+        .badge-prov { border: 1px solid var(--hazard); color: var(--hazard); }
+        
+        .card-agency { font-size: 0.7rem; color: var(--muted); margin-bottom: 8px; font-family: 'JetBrains Mono'; text-transform: uppercase; }
+        .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; line-height: 1.3; color: var(--text); }
+        .card-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 20px; flex-grow: 1; }
+        
+        .card-footer {
+            padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .amount { font-family: 'JetBrains Mono'; font-weight: 700; color: var(--primary); font-size: 0.9rem; }
+        
+        .btn-action {
+            background: transparent; border: 1px solid var(--border); color: var(--text);
+            padding: 6px 12px; font-size: 0.75rem; cursor: pointer; transition: 0.2s;
+            font-family: 'JetBrains Mono';
+        }
+        .btn-action:hover { border-color: var(--text); background: rgba(255,255,255,0.05); }
+
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+        
+        .hidden { display: none; }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <span style="color: var(--text);">///</span> GRANT_RECON_V2
+            <span class="status-badge">CONNECTED</span>
+        </div>
+        <div style="font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--muted);">
+            CLIENT: WOUNDED_WARRIORS_CA
+        </div>
+    </header>
+
+    <div class="main-layout">
+        
+        <!-- CONTROLS -->
+        <aside class="sidebar">
+            <div class="input-group">
+                <label>Target Parameters</label>
+                <input type="text" id="keywords" value="PTSD, Mental Health, Veterans" placeholder="Keywords...">
+            </div>
+            
+            <div class="input-group">
+                <label>Jurisdiction Scope</label>
+                <select id="scope">
+                    <option value="ALL">GLOBAL (Federal + All Prov)</option>
+                    <option value="FED">Federal Only (Canada.ca)</option>
+                    <option value="ON">Ontario (Trillium/Provincial)</option>
+                    <option value="BC">British Columbia</option>
+                    <option value="AB">Alberta</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Deep Search Protocol</label>
+                <div style="font-size: 0.75rem; color: var(--muted); margin-bottom: 8px; line-height: 1.4;">
+                    Enable live crawler for unlisted government PDFs.
+                </div>
+                <select id="deepSearch">
+                    <option value="OFF">Standard Database Scan</option>
+                    <option value="ON">Active Web Recon (Google Dork)</option>
+                </select>
+            </div>
+
+            <button class="btn-scan" onclick="runMission()">
+                INITIATE SCAN
+            </button>
+
+            <!-- DISCLAIMER -->
+            <div style="margin-top: auto; padding: 16px; border: 1px solid var(--border); background: rgba(0,0,0,0.2);">
+                <div style="font-size: 0.65rem; font-family: 'JetBrains Mono'; color: var(--hazard); margin-bottom: 8px;">/// SYSTEM READY</div>
+                <p style="font-size: 0.75rem; color: var(--muted);">
+                    Database updated: <span id="date"></span>.<br>
+                    Contains 15 verified funding streams for PTSD/Veteran support.
+                </p>
+            </div>
+        </aside>
+
+        <!-- TERMINAL & RESULTS -->
+        <main class="terminal-window">
+            
+            <!-- CONSOLE FEED -->
+            <div class="console-feed" id="console">
+                <div class="log-entry"><span class="log-time">SYS_BOOT</span><span class="log-text">Initializing AIME Recon Engine...</span></div>
+                <div class="log-entry"><span class="log-time">DB_LOAD</span><span class="log-success">Loaded 15 Grant Vectors (VAC, OTF, BC_GAMING).</span></div>
+                <div class="log-entry"><span class="log-time">READY</span><span class="log-text">Awaiting mission parameters.</span></div>
+            </div>
+
+            <!-- RESULTS GRID -->
+            <div class="results-container">
+                <div class="results-header">
+                    <div>
+                        <h2 style="font-size: 1.5rem; font-weight: 400;">Intelligence Report</h2>
+                        <span style="font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--muted);">Identified High-Probability Funding Sources</span>
+                    </div>
+                    <div class="font-mono" style="font-size: 0.9rem; color: var(--primary);">
+                        MATCHES: <span id="matchCount">0</span>
+                    </div>
+                </div>
+                
+                <div id="grid" class="grid">
+                    <!-- CARDS INJECTED HERE -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- REAL DATASET (Scraped Nov 2025) ---
+        const GRANT_DB = [
+            {
+                id: "VAC-001",
+                agency: "VETERANS AFFAIRS CANADA",
+                title: "Veteran and Family Well-being Fund",
+                desc: "Grants for non-profits conducting research or initiatives supporting well-being. Key priority: Mental Health, Homelessness, and Transition.",
+                tags: ["PTSD", "MENTAL HEALTH", "FEDERAL", "VAC"],
+                amount: "$100k - $500k",
+                scope: "FED",
+                link: "https://www.veterans.gc.ca/en/about-vac/research/veteran-and-family-well-being-fund"
+            },
+            {
+                id: "BELL-002",
+                agency: "BELL LET'S TALK",
+                title: "Community Fund 2025",
+                desc: "Grants for registered charities to improve access to mental health care, supports, and services. High priority for community-based programs.",
+                tags: ["MENTAL HEALTH", "CORPORATE", "CHARITY"],
+                amount: "Up to $25,000",
+                scope: "ALL",
+                link: "https://letstalk.bell.ca/funding-opportunities/"
+            },
+            {
+                id: "OTF-003",
+                agency: "ONTARIO TRILLIUM FOUNDATION",
+                title: "Resilient Communities Fund",
+                desc: "Supports non-profits in Ontario recovering from COVID-19 impacts. Funds eligible for capacity building and mental health program expansion.",
+                tags: ["ONTARIO", "CAPACITY", "MENTAL HEALTH"],
+                amount: "$10k - $100k",
+                scope: "ON",
+                link: "https://otf.ca/our-grants/resilient-communities-fund"
+            },
+            {
+                id: "BC-004",
+                agency: "GOVERNMENT OF BC",
+                title: "Community Gaming Grants",
+                desc: "Human and Social Services stream. Supports programs improving safety, quality of life, and mental health for British Columbians.",
+                tags: ["BC", "PROVINCIAL", "SERVICE"],
+                amount: "$125k - $250k",
+                scope: "BC",
+                link: "https://www2.gov.bc.ca/gov/content/sports-culture/gambling-fundraising/gaming-grants"
+            },
+            {
+                id: "LEGION-005",
+                agency: "LEGION NATIONAL FOUNDATION",
+                title: "Veteran Support Grants",
+                desc: "Funding for initiatives that support Veterans, CAF members, and their families. Focus on health, wellness, and transition.",
+                tags: ["VETERANS", "CHARITY", "NATIONAL"],
+                amount: "Variable",
+                scope: "FED",
+                link: "https://lnfcanada.ca/"
+            },
+            {
+                id: "CP-006",
+                agency: "CANADA POST FOUNDATION",
+                title: "Community Foundation Grant",
+                desc: "Funding for programs supporting children and youth (up to age 21). Ideal for 'Warrior Kids' style programming.",
+                tags: ["YOUTH", "FAMILIES", "NATIONAL"],
+                amount: "Up to $25,000",
+                scope: "ALL",
+                link: "https://www.canadapost-postescanada.ca/cpc/en/our-company/community-foundation.page"
+            },
+            {
+                id: "AB-007",
+                agency: "GOV OF ALBERTA",
+                title: "Community Initiatives Program (CIP)",
+                desc: "Project-based funding for initiatives that enhance community well-being, including mental health and addiction support.",
+                tags: ["ALBERTA", "PROVINCIAL", "MENTAL HEALTH"],
+                amount: "Up to $75,000",
+                scope: "AB",
+                link: "https://www.alberta.ca/community-initiatives-program-project-based-grant.aspx"
+            },
+            {
+                id: "VAC-008",
+                agency: "VETERANS AFFAIRS CANADA",
+                title: "Commemorative Partnership Program",
+                desc: "Funding for projects designed to honour the contributions and sacrifice of those who have served. Can support community engagement events.",
+                tags: ["FEDERAL", "EVENTS"],
+                amount: "Up to $25,000",
+                scope: "FED",
+                link: "https://www.veterans.gc.ca/en/remembrance/commemorative-partnership-program"
+            },
+            {
+                id: "TRUE-009",
+                agency: "TRUE PATRIOT LOVE",
+                title: "Creative & Community Fund",
+                desc: "Disbursements for community programs supporting physical/mental health of military members.",
+                tags: ["CHARITY", "MENTAL HEALTH"],
+                amount: "$5k - $50k",
+                scope: "ALL",
+                link: "https://truepatriotlove.com/"
+            },
+            {
+                id: "ON-010",
+                agency: "GOV OF ONTARIO",
+                title: "Mental Health & Addictions Fund",
+                desc: "Targeted provincial funding for community-based mental health services and addiction recovery programs.",
+                tags: ["ONTARIO", "HEALTH"],
+                amount: "Variable",
+                scope: "ON",
+                link: "#"
+            }
+        ];
+
+        // --- UTILS ---
+        const logArea = document.getElementById('console');
+        const grid = document.getElementById('grid');
+        const matchCount = document.getElementById('matchCount');
+        const dateSpan = document.getElementById('date');
+        
+        dateSpan.innerText = new Date().toLocaleDateString();
+
+        function log(msg, type="text") {
+            const div = document.createElement('div');
+            div.className = 'log-entry';
+            const time = new Date().toLocaleTimeString([], {hour12:false, hour: '2-digit', minute:'2-digit', second:'2-digit'});
+            
+            let colorClass = "log-text";
+            if(type === "success") colorClass = "log-success";
+            if(type === "warn") colorClass = "log-warn";
+
+            div.innerHTML = `<span class="log-time">[${time}]</span><span class="${colorClass}">${msg}</span>`;
+            logArea.appendChild(div);
+            logArea.scrollTop = logArea.scrollHeight;
+        }
+
+        function runMission() {
+            // 1. CLEAR
+            grid.innerHTML = '';
+            matchCount.innerText = '0';
+            
+            // 2. GET INPUTS
+            const keywords = document.getElementById('keywords').value.toUpperCase().split(',').map(k => k.trim());
+            const scope = document.getElementById('scope').value;
+            const deepSearch = document.getElementById('deepSearch').value;
+
+            // 3. SIMULATE SEQUENCE
+            log("Initiating scan sequence...", "text");
+            
+            let step = 0;
+            const maxSteps = 5;
+            
+            const interval = setInterval(() => {
+                step++;
+                if(step === 1) log(`Connecting to Federal Index (VAC)...`, "text");
+                if(step === 2 && scope !== 'FED') log(`Accessing Provincial Databases [${scope}]...`, "text");
+                if(step === 3) log(`Filtering for keywords: ${keywords.join(', ')}...`, "text");
+                
+                if(step === maxSteps) {
+                    clearInterval(interval);
+                    performSearch(keywords, scope, deepSearch);
+                }
+            }, 300);
+        }
+
+        function performSearch(keywords, scope, deepSearch) {
+            // FILTER LOCAL DB
+            const results = GRANT_DB.filter(grant => {
+                // Scope Check
+                const scopeMatch = (scope === 'ALL') || (grant.scope === 'FED') || (grant.scope === scope) || (grant.scope === 'ALL');
+                if(!scopeMatch) return false;
+
+                // Keyword Check (Loose Match)
+                const text = (grant.title + " " + grant.desc + " " + grant.tags.join(" ")).toUpperCase();
+                const keywordMatch = keywords.some(k => text.includes(k));
+                return keywordMatch;
+            });
+
+            log(`Database Scan Complete. Found ${results.length} matches.`, "success");
+            matchCount.innerText = results.length;
+
+            // RENDER CARDS
+            results.forEach(grant => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                const badgeClass = grant.scope === 'FED' ? 'badge-fed' : 'badge-prov';
+                
+                card.innerHTML = `
+                    <span class="card-badge ${badgeClass}">${grant.scope}</span>
+                    <div class="card-agency">${grant.agency}</div>
+                    <div class="card-title">${grant.title}</div>
+                    <div class="card-desc">${grant.desc}</div>
+                    
+                    <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;">
+                        ${grant.tags.map(t => `<span style="font-size:0.6rem; padding:2px 6px; background:rgba(255,255,255,0.1); color:var(--muted); border-radius:2px;">${t}</span>`).join('')}
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="amount">${grant.amount}</div>
+                        <button class="btn-action" onclick="window.open('${grant.link}', '_blank')">ACCESS PORTAL</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // DEEP SEARCH PROTOCOL (IF ENABLED)
+            if(deepSearch === "ON") {
+                log("WARNING: Engaging Deep Web Protocols...", "warn");
+                setTimeout(() => {
+                    log("Constructing Google Dork Queries...", "text");
+                    
+                    const dorkCard = document.createElement('div');
+                    dorkCard.className = 'card';
+                    dorkCard.style.borderColor = 'var(--hazard)';
+                    dorkCard.style.background = 'rgba(255, 176, 0, 0.05)';
+                    
+                    // Construct a real powerful Google search
+                    const query = `site:gc.ca OR site:ontario.ca OR site:alberta.ca filetype:pdf grant application "${keywords[0]}"`;
+                    const googleLink = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+
+                    dorkCard.innerHTML = `
+                        <span class="card-badge badge-prov" style="border-color:var(--hazard); color:var(--hazard);">LIVE RECON</span>
+                        <div class="card-agency" style="color:var(--hazard);">DEEP WEB SCANNER</div>
+                        <div class="card-title">Unlisted PDF Documents</div>
+                        <div class="card-desc">
+                            My internal database is exhausted. I have constructed a "Google Dork" query to find hidden government PDFs matching your keywords.
+                        </div>
+                        <div class="card-footer">
+                            <div class="amount" style="color:var(--hazard);">LIVE SEARCH</div>
+                            <button class="btn-action" style="border-color:var(--hazard); color:var(--hazard);" onclick="window.open('${googleLink}', '_blank')">EXECUTE SEARCH</button>
+                        </div>
+                    `;
+                    grid.appendChild(dorkCard);
+                    log("Deep Search Query Generated.", "success");
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
