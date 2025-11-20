@@ -847,6 +847,25 @@
         }
 
         @media (max-width: 768px) {
+            .header {
+                padding: 16px 20px;
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .nav-tabs {
+                width: 100%;
+                justify-content: stretch;
+            }
+
+            .nav-tab {
+                flex: 1;
+                text-align: center;
+                padding: 10px 12px;
+                font-size: 0.75rem;
+            }
+
             .main-layout {
                 flex-direction: column;
             }
@@ -855,11 +874,56 @@
                 width: 100%;
                 border-right: none;
                 border-bottom: 1px solid var(--border);
-                max-height: 50vh;
+                max-height: none;
+                padding: 20px 16px;
+            }
+
+            .console-feed {
+                height: 120px;
+                padding: 16px;
+                font-size: 0.75rem;
+            }
+
+            .results-container {
+                padding: 20px 16px;
+            }
+
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .results-meta {
+                width: 100%;
             }
 
             .grid {
                 grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .card-title {
+                font-size: 1.05rem;
+            }
+
+            .card-footer {
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch;
+            }
+
+            .card-actions {
+                width: 100%;
+                justify-content: stretch;
+            }
+
+            .btn-action {
+                flex: 1;
             }
         }
     </style>
@@ -944,7 +1008,7 @@
                         /// MISSION READY
                     </div>
                     <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
-                        Tracking <strong>50+</strong> verified funding streams for PTSD & veteran support across Canada.
+                        Tracking <strong>60+</strong> verified funding streams for PTSD & veteran support across Canada.
                     </p>
                 </div>
             </div>
@@ -1028,9 +1092,9 @@
                 amount: "$100k - $500k",
                 scope: "FED",
                 type: "fed",
-                deadline: "2025-03-15",
+                deadline: "rolling",
                 link: "https://www.veterans.gc.ca/en/about-vac/research/veteran-and-family-well-being-fund",
-                contact: "vac.info@veterans.gc.ca"
+                contact: "veteraninnovation@veterans.gc.ca"
             },
             {
                 id: "VAC-008",
@@ -1095,8 +1159,8 @@
                 amount: "Up to $25,000",
                 scope: "ALL",
                 type: "corp",
-                deadline: "2025-01-31",
-                link: "https://letstalk.bell.ca/funding-opportunities/",
+                deadline: "rolling",
+                link: "https://letstalk.bell.ca/en/",
                 contact: "letstalk@bell.ca"
             },
             {
@@ -1571,6 +1635,136 @@
                 deadline: "rolling",
                 link: "https://mcconnellfoundation.ca/",
                 contact: "info@mcconnellfoundation.ca"
+            },
+            {
+                id: "HELMETS-001",
+                agency: "HELMETS TO HARDHATS CANADA",
+                title: "Veteran Training & Transition Support",
+                desc: "Funding for programs that help veterans transition to skilled trades careers. Supports training, mentorship, and employment programs.",
+                tags: ["VETERANS", "EMPLOYMENT", "TRANSITION", "TRAINING"],
+                amount: "$10k - $100k",
+                scope: "ALL",
+                type: "corp",
+                deadline: "rolling",
+                link: "https://helmetstohardhats.ca/",
+                contact: "info@helmetstohardhats.ca"
+            },
+            {
+                id: "INVICTUS-001",
+                agency: "INVICTUS GAMES FOUNDATION CANADA",
+                title: "Adaptive Sports & Recovery Programs",
+                desc: "Supporting adaptive sports programs and recovery through sport initiatives for wounded, ill, and injured veterans.",
+                tags: ["VETERANS", "SPORTS", "RECOVERY", "PTSD"],
+                amount: "$5k - $50k",
+                scope: "ALL",
+                type: "corp",
+                deadline: "2025-06-30",
+                link: "https://invictusgames2025.ca/",
+                contact: "info@invictusgames2025.ca"
+            },
+            {
+                id: "VAC-009",
+                agency: "VETERANS AFFAIRS CANADA",
+                title: "Veterans Organizations Program",
+                desc: "Annual operational funding for veteran-serving organizations. Supports core operations, programs, and services for veterans and their families.",
+                tags: ["VETERANS", "OPERATIONAL", "FEDERAL", "ANNUAL"],
+                amount: "$25k - $200k",
+                scope: "FED",
+                type: "fed",
+                deadline: "2025-05-31",
+                link: "https://www.veterans.gc.ca/en/",
+                contact: "vac.info@veterans.gc.ca"
+            },
+            {
+                id: "CANUCK-001",
+                agency: "CANUCK PLACE CHILDREN'S HOSPICE",
+                title: "Military Families Support Fund",
+                desc: "Grants for programs supporting children in military families dealing with trauma, loss, or serious illness. Focus on mental health and respite care.",
+                tags: ["MILITARY FAMILIES", "CHILDREN", "BC", "MENTAL HEALTH"],
+                amount: "$10k - $75k",
+                scope: "BC",
+                type: "corp",
+                deadline: "rolling",
+                link: "https://www.canuckplace.org/",
+                contact: "foundation@canuckplace.org"
+            },
+            {
+                id: "TREBLE-001",
+                agency: "TREBLE VICTOR GROUP",
+                title: "Veteran Emergency Support Fund",
+                desc: "Emergency financial assistance and program grants for veterans in crisis. Supports housing, mental health interventions, and emergency needs.",
+                tags: ["VETERANS", "EMERGENCY", "HOUSING", "CRISIS"],
+                amount: "$1k - $25k",
+                scope: "ALL",
+                type: "corp",
+                deadline: "rolling",
+                link: "https://treblevictorgroup.org/",
+                contact: "support@treblevictorgroup.org"
+            },
+            {
+                id: "OPSEU-001",
+                agency: "OPSEU FOUNDATION",
+                title: "Community Services & Mental Health",
+                desc: "Funding for community-based mental health programs, addiction services, and crisis intervention in Ontario. Supports veteran-focused initiatives.",
+                tags: ["ONTARIO", "MENTAL HEALTH", "COMMUNITY", "UNION"],
+                amount: "$5k - $30k",
+                scope: "ON",
+                type: "corp",
+                deadline: "2025-04-30",
+                link: "https://opseufoundation.org/",
+                contact: "foundation@opseu.org"
+            },
+            {
+                id: "SOLDIER-001",
+                agency: "SOLDIER ON PROGRAM",
+                title: "Adaptive Recreation & Sports Grants",
+                desc: "CAF program supporting adaptive physical activities and sports for ill and injured CAF members and veterans. Partners with community organizations.",
+                tags: ["VETERANS", "SPORTS", "FEDERAL", "ADAPTIVE"],
+                amount: "$5k - $50k",
+                scope: "FED",
+                type: "fed",
+                deadline: "rolling",
+                link: "https://www.canada.ca/en/department-national-defence/services/guide/programs-canadian-armed-forces-members/soldier-on.html",
+                contact: "soldieron@forces.gc.ca"
+            },
+            {
+                id: "RONA-001",
+                agency: "RONA FOUNDATION",
+                title: "Community Infrastructure for Veterans",
+                desc: "Grants for building renovations and infrastructure improvements at veteran-serving facilities. Supports accessible design and mental health spaces.",
+                tags: ["INFRASTRUCTURE", "VETERANS", "FACILITIES"],
+                amount: "$10k - $100k",
+                scope: "ALL",
+                type: "corp",
+                deadline: "2025-03-31",
+                link: "https://www.rona.ca/en/foundation",
+                contact: "fondation@rona.ca"
+            },
+            {
+                id: "MAPLE-001",
+                agency: "MAPLE LEAF SPORTS & ENTERTAINMENT FOUNDATION",
+                title: "Community Sport & Youth Development",
+                desc: "Supporting sports-based youth programs including those serving military families and at-risk youth. Focus on mental wellness through sport.",
+                tags: ["ONTARIO", "YOUTH", "SPORTS", "MENTAL HEALTH"],
+                amount: "$25k - $150k",
+                scope: "ON",
+                type: "corp",
+                deadline: "2025-05-15",
+                link: "https://mlsef.ca/",
+                contact: "foundation@mlse.com"
+            },
+            {
+                id: "BGIS-001",
+                agency: "BGIS GIVING PROGRAM",
+                title: "Veterans Housing & Infrastructure",
+                desc: "Corporate giving focused on veteran housing, facility improvements, and community infrastructure supporting military families.",
+                tags: ["VETERANS", "HOUSING", "INFRASTRUCTURE"],
+                amount: "$5k - $50k",
+                scope: "ALL",
+                type: "corp",
+                deadline: "rolling",
+                link: "https://www.bgis.com/",
+                contact: "giving@bgis.com"
             }
         ];
 
@@ -1594,6 +1788,9 @@
         // Initialize
         dbCount.innerText = GRANT_DB.length;
         updateTrackedCount();
+
+        // Log database stats
+        console.log(`Grant Recon v2.1 - Database loaded: ${GRANT_DB.length} grants`);
 
         // Navigation
         document.querySelectorAll('.nav-tab').forEach(tab => {
