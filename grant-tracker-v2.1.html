@@ -829,6 +829,246 @@
             font-size: 0.95rem;
         }
 
+        /* Organization Profile Section */
+        .profile-section {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            overflow: hidden;
+        }
+
+        .profile-toggle {
+            width: 100%;
+            padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-family: 'IBM Plex Mono';
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .profile-toggle:hover {
+            background: var(--surface-light);
+        }
+
+        .profile-toggle-arrow {
+            transition: transform 0.2s;
+            font-size: 0.65rem;
+        }
+
+        .profile-toggle-arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .profile-body {
+            display: none;
+            padding: 14px;
+            border-top: 1px solid var(--border);
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .profile-body.open {
+            display: flex;
+        }
+
+        .profile-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .profile-tag {
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'IBM Plex Mono';
+            background: transparent;
+            color: var(--text-muted);
+        }
+
+        .profile-tag:hover {
+            border-color: var(--border-bright);
+        }
+
+        .profile-tag.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--bg);
+            font-weight: 600;
+        }
+
+        .province-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .province-check {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-family: 'IBM Plex Mono';
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .province-check input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            padding: 0;
+            accent-color: var(--primary);
+        }
+
+        .btn-save-profile {
+            background: var(--secondary);
+            color: white;
+            font-weight: 700;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            font-family: 'IBM Plex Mono';
+            text-transform: uppercase;
+            transition: all 0.2s;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-save-profile:hover {
+            filter: brightness(1.15);
+            transform: translateY(-1px);
+        }
+
+        /* Relevance Badge */
+        .relevance-badge {
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: 'IBM Plex Mono';
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .relevance-high {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .relevance-mid {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--hazard);
+            color: var(--hazard);
+        }
+
+        .relevance-low {
+            background: rgba(107, 114, 128, 0.15);
+            border: 1px solid var(--text-dim);
+            color: var(--text-dim);
+        }
+
+        .badge-recommended {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: 'IBM Plex Mono';
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        /* AI Intelligence Summary */
+        .ai-summary {
+            background: var(--bg);
+            border: 1px solid var(--secondary);
+            border-radius: 6px;
+            padding: 14px;
+        }
+
+        .ai-summary-title {
+            font-family: 'IBM Plex Mono';
+            font-size: 0.7rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ai-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        .ai-stat {
+            text-align: center;
+        }
+
+        .ai-stat-value {
+            font-family: 'IBM Plex Mono';
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+
+        .ai-stat-label {
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            font-family: 'IBM Plex Mono';
+            letter-spacing: 0.03em;
+        }
+
+        /* Relevance Filter Chips */
+        .relevance-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .relevance-chip {
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'IBM Plex Mono';
+            background: transparent;
+            color: var(--text-muted);
+        }
+
+        .relevance-chip:hover {
+            border-color: var(--border-bright);
+        }
+
+        .relevance-chip.active {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: white;
+            font-weight: 600;
+        }
+
         /* Responsive */
         @media (max-width: 1200px) {
             .grid {
@@ -948,6 +1188,109 @@
 
         <!-- SIDEBAR CONTROLS -->
         <aside class="sidebar">
+
+            <!-- ORGANIZATION PROFILE -->
+            <div class="profile-section">
+                <button class="profile-toggle" onclick="toggleProfile()">
+                    <span>Organization Profile</span>
+                    <span class="profile-toggle-arrow" id="profileArrow">▼</span>
+                </button>
+                <div class="profile-body" id="profileBody">
+                    <div class="input-group">
+                        <label>Mission Statement</label>
+                        <textarea id="orgMission" placeholder="Describe your organization's mission, the populations you serve, and your core programs..."></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Program Areas</label>
+                        <div class="profile-tags" id="programAreaTags">
+                            <span class="profile-tag" data-area="PTSD Treatment">PTSD Treatment</span>
+                            <span class="profile-tag" data-area="Peer Support">Peer Support</span>
+                            <span class="profile-tag" data-area="Family Services">Family Services</span>
+                            <span class="profile-tag" data-area="Transition to Civilian Life">Transition</span>
+                            <span class="profile-tag" data-area="Research">Research</span>
+                            <span class="profile-tag" data-area="Family Support">Family Support</span>
+                            <span class="profile-tag" data-area="Mental Health">Mental Health</span>
+                            <span class="profile-tag" data-area="Physical Rehabilitation">Phys. Rehab</span>
+                            <span class="profile-tag" data-area="Homelessness">Homelessness</span>
+                            <span class="profile-tag" data-area="Employment">Employment</span>
+                            <span class="profile-tag" data-area="Education">Education</span>
+                            <span class="profile-tag" data-area="Addiction Recovery">Addiction Recovery</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Organization Type</label>
+                        <select id="orgType">
+                            <option value="">Select...</option>
+                            <option value="Registered Charity">Registered Charity</option>
+                            <option value="Non-Profit">Non-Profit</option>
+                            <option value="Research Institution">Research Institution</option>
+                            <option value="Government Agency">Government Agency</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Annual Budget Range</label>
+                        <select id="orgBudget">
+                            <option value="">Select...</option>
+                            <option value="500000">Under $500K</option>
+                            <option value="1000000">$500K - $1M</option>
+                            <option value="5000000">$1M - $5M</option>
+                            <option value="25000000">$5M - $25M</option>
+                            <option value="50000000">Over $25M</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Provinces Active In</label>
+                        <div class="province-grid" id="provinceGrid">
+                            <label class="province-check"><input type="checkbox" value="ON"> Ontario</label>
+                            <label class="province-check"><input type="checkbox" value="BC"> British Columbia</label>
+                            <label class="province-check"><input type="checkbox" value="AB"> Alberta</label>
+                            <label class="province-check"><input type="checkbox" value="QC"> Quebec</label>
+                            <label class="province-check"><input type="checkbox" value="NS"> Nova Scotia</label>
+                            <label class="province-check"><input type="checkbox" value="MB"> Manitoba</label>
+                            <label class="province-check"><input type="checkbox" value="SK"> Saskatchewan</label>
+                            <label class="province-check"><input type="checkbox" value="NB"> New Brunswick</label>
+                            <label class="province-check"><input type="checkbox" value="NL"> Newfoundland</label>
+                            <label class="province-check"><input type="checkbox" value="PE"> PEI</label>
+                            <label class="province-check"><input type="checkbox" value="NT"> NWT</label>
+                            <label class="province-check"><input type="checkbox" value="YT"> Yukon</label>
+                            <label class="province-check"><input type="checkbox" value="NU"> Nunavut</label>
+                        </div>
+                    </div>
+
+                    <button class="btn-save-profile" onclick="saveOrgProfile()">Save Profile</button>
+                </div>
+            </div>
+
+            <!-- AI INTELLIGENCE SUMMARY (hidden until profile exists) -->
+            <div class="ai-summary hidden" id="aiSummary">
+                <div class="ai-summary-title">◈ AI Relevance Scoring</div>
+                <div class="ai-stats-grid">
+                    <div class="ai-stat">
+                        <div class="ai-stat-value" id="aiScored">0</div>
+                        <div class="ai-stat-label">Scored</div>
+                    </div>
+                    <div class="ai-stat">
+                        <div class="ai-stat-value" id="aiAvgScore">--</div>
+                        <div class="ai-stat-label">Avg Match</div>
+                    </div>
+                    <div class="ai-stat">
+                        <div class="ai-stat-value" id="aiHighConf">0</div>
+                        <div class="ai-stat-label">&gt;80%</div>
+                    </div>
+                </div>
+                <div class="relevance-filters" id="relevanceFilters">
+                    <div class="relevance-chip active" data-min="0">All</div>
+                    <div class="relevance-chip" data-min="50">&gt;50%</div>
+                    <div class="relevance-chip" data-min="70">&gt;70%</div>
+                    <div class="relevance-chip" data-min="90">&gt;90%</div>
+                </div>
+            </div>
+
             <div class="sidebar-section">
                 <div class="section-title">Mission Parameters</div>
 
@@ -1769,6 +2112,269 @@
         ];
 
         // ============================================
+        // NLP ENGINE: TF-IDF RELEVANCE SCORING
+        // ============================================
+
+        // Stop words list (50+)
+        const STOP_WORDS = new Set([
+            'a','an','the','and','or','but','in','on','at','to','for','of','with','by',
+            'from','is','it','its','this','that','are','was','were','be','been','being',
+            'have','has','had','do','does','did','will','would','could','should','may',
+            'might','shall','can','need','must','not','no','nor','so','if','then','than',
+            'too','very','just','about','above','after','again','all','also','am','any',
+            'because','before','between','both','each','few','further','get','got','here',
+            'how','into','more','most','other','our','out','over','own','same','some',
+            'such','through','under','until','up','us','we','what','when','where','which',
+            'while','who','whom','why','you','your','these','those','there','they','them'
+        ]);
+
+        // Minimal Porter Stemmer
+        function porterStem(word) {
+            if (word.length < 3) return word;
+            // Step: strip common suffixes longest-first
+            const suffixes = [
+                ['ational','ate'],['tional','tion'],['iveness','ive'],['fulness','ful'],
+                ['ousness','ous'],['ization','ize'],['ational','ate'],['ation','ate'],
+                ['ement',''],['ment',''],['ness',''],['tion','t'],['ible',''],
+                ['able',''],['ful',''],['ous',''],['ive',''],['ize',''],
+                ['ing',''],['ely',''],['ally','al'],['ling','l'],
+                ['edly',''],['ting','t'],['ly',''],['ed',''],['er',''],
+                ['es',''],['al',''],['s','']
+            ];
+            for (const [suffix, replacement] of suffixes) {
+                if (word.endsWith(suffix) && (word.length - suffix.length + replacement.length) >= 2) {
+                    return word.slice(0, -suffix.length) + replacement;
+                }
+            }
+            return word;
+        }
+
+        // Tokenize text: lowercase, strip punctuation, remove stop words, stem
+        function tokenize(text) {
+            if (!text) return [];
+            return text
+                .toLowerCase()
+                .replace(/[^a-z0-9\s]/g, ' ')
+                .split(/\s+/)
+                .filter(w => w.length > 1 && !STOP_WORDS.has(w))
+                .map(w => porterStem(w));
+        }
+
+        // Build term frequency map for a token list
+        function termFrequency(tokens) {
+            const tf = {};
+            const len = tokens.length || 1;
+            for (const t of tokens) {
+                tf[t] = (tf[t] || 0) + 1;
+            }
+            for (const t in tf) {
+                tf[t] = tf[t] / len;
+            }
+            return tf;
+        }
+
+        // Build IDF from array of TF maps
+        function inverseDocFrequency(tfMaps) {
+            const docCount = tfMaps.length;
+            const df = {};
+            for (const tf of tfMaps) {
+                for (const term in tf) {
+                    df[term] = (df[term] || 0) + 1;
+                }
+            }
+            const idf = {};
+            for (const term in df) {
+                idf[term] = Math.log(docCount / df[term]);
+            }
+            return idf;
+        }
+
+        // Build TF-IDF vector from TF map and IDF map
+        function tfidfVector(tf, idf) {
+            const vec = {};
+            for (const term in tf) {
+                if (idf[term] !== undefined) {
+                    vec[term] = tf[term] * idf[term];
+                }
+            }
+            return vec;
+        }
+
+        // Cosine similarity between two vectors (objects)
+        function cosineSimilarity(vecA, vecB) {
+            let dot = 0, magA = 0, magB = 0;
+            for (const t in vecA) {
+                magA += vecA[t] * vecA[t];
+                if (vecB[t]) dot += vecA[t] * vecB[t];
+            }
+            for (const t in vecB) {
+                magB += vecB[t] * vecB[t];
+            }
+            magA = Math.sqrt(magA);
+            magB = Math.sqrt(magB);
+            if (magA === 0 || magB === 0) return 0;
+            return dot / (magA * magB);
+        }
+
+        // Jaccard similarity between two sets
+        function jaccardSimilarity(setA, setB) {
+            if (setA.size === 0 && setB.size === 0) return 0;
+            let intersection = 0;
+            for (const item of setA) {
+                if (setB.has(item)) intersection++;
+            }
+            const union = setA.size + setB.size - intersection;
+            return union === 0 ? 0 : intersection / union;
+        }
+
+        // Parse grant amount string to max numeric value
+        function parseGrantMaxAmount(amountStr) {
+            const cleaned = amountStr.replace(/[,$]/g, '').toUpperCase();
+            const numbers = cleaned.match(/[\d]+[KMB]?/g);
+            if (!numbers) return 0;
+            let max = 0;
+            for (const n of numbers) {
+                let val = parseFloat(n);
+                if (n.endsWith('K')) val *= 1000;
+                else if (n.endsWith('M')) val *= 1000000;
+                else if (n.endsWith('B')) val *= 1000000000;
+                if (val > max) max = val;
+            }
+            return max;
+        }
+
+        // Map grant scope to province codes
+        function grantScopeToProvinces(scope) {
+            if (scope === 'ALL' || scope === 'FED') return 'NATIONAL';
+            return scope;
+        }
+
+        // Compute budget fit score
+        function budgetFitScore(grantAmountStr, orgBudget) {
+            if (!orgBudget) return 0.5; // neutral if no budget set
+            const grantMax = parseGrantMaxAmount(grantAmountStr);
+            if (grantMax === 0) return 0.5; // "Variable" amounts
+            const ratio = grantMax / orgBudget;
+            if (ratio <= 2.0) return 1.0;
+            if (ratio <= 5.0) return 0.5;
+            return 0.0;
+        }
+
+        // Compute geographic match score
+        function geoMatchScore(grantScope, orgProvinces) {
+            if (!orgProvinces || orgProvinces.length === 0) return 0.5;
+            const gs = grantScopeToProvinces(grantScope);
+            if (gs === 'NATIONAL') return 0.5;
+            return orgProvinces.includes(gs) ? 1.0 : 0.0;
+        }
+
+        // Main scoring pipeline: returns { grantId: score (0-100) }
+        let grantRelevanceScores = {};
+        let relevanceMinFilter = 0;
+
+        function computeRelevanceScores() {
+            const profile = JSON.parse(localStorage.getItem('orgProfile') || 'null');
+            if (!profile || !profile.mission) {
+                grantRelevanceScores = {};
+                return;
+            }
+
+            // Build org profile text
+            const orgText = [
+                profile.mission,
+                (profile.programAreas || []).join(' '),
+                profile.orgType || ''
+            ].join(' ');
+            const orgTokens = tokenize(orgText);
+            const orgTF = termFrequency(orgTokens);
+
+            // Build TF for each grant
+            const grantTFs = GRANT_DB.map(g => {
+                const grantText = [g.title, g.desc, g.tags.join(' '), g.agency].join(' ');
+                return termFrequency(tokenize(grantText));
+            });
+
+            // Build IDF across all grants + org profile
+            const allTFs = [...grantTFs, orgTF];
+            const idf = inverseDocFrequency(allTFs);
+
+            // Build org TF-IDF vector
+            const orgVec = tfidfVector(orgTF, idf);
+
+            // Org program areas tokenized to individual words for matching
+            const orgAreaWords = new Set();
+            (profile.programAreas || []).forEach(a => {
+                a.toLowerCase().split(/\s+/).forEach(w => { if (w.length > 2) orgAreaWords.add(w); });
+            });
+
+            const orgBudget = parseFloat(profile.budget) || 0;
+            const orgProvinces = profile.provinces || [];
+
+            // Score each grant — first pass: raw component scores
+            const rawScores = [];
+            GRANT_DB.forEach((grant, i) => {
+                const grantVec = tfidfVector(grantTFs[i], idf);
+                const textScore = cosineSimilarity(orgVec, grantVec);
+                const grantTagWords = new Set();
+                grant.tags.forEach(t => {
+                    t.toLowerCase().split(/\s+/).forEach(w => { if (w.length > 2) grantTagWords.add(w); });
+                });
+                const tagScore = jaccardSimilarity(orgAreaWords, grantTagWords);
+                const budgetScore = budgetFitScore(grant.amount, orgBudget);
+                const geoScore = geoMatchScore(grant.scope, orgProvinces);
+                rawScores.push({ id: grant.id, textScore, tagScore, budgetScore, geoScore });
+            });
+
+            // Second pass: raw composite scores
+            const composites = rawScores.map(r => {
+                return (r.textScore * 0.50) + (r.tagScore * 0.20) + (r.budgetScore * 0.15) + (r.geoScore * 0.15);
+            });
+
+            // Min-max normalize the final composite scores to use the full 0-100 range
+            const compMin = Math.min(...composites);
+            const compRange = (Math.max(...composites) - compMin) || 1;
+
+            grantRelevanceScores = {};
+            rawScores.forEach((r, i) => {
+                const normalized = (composites[i] - compMin) / compRange;
+                // Power curve (sqrt) stretches mid-range scores upward for readable distribution
+                const curved = Math.pow(normalized, 0.55);
+                grantRelevanceScores[r.id] = Math.min(100, Math.round(curved * 100));
+            });
+
+            // Update AI summary UI
+            updateAISummary();
+        }
+
+        function updateAISummary() {
+            const summaryEl = document.getElementById('aiSummary');
+            const profile = JSON.parse(localStorage.getItem('orgProfile') || 'null');
+            if (!profile || !profile.mission) {
+                summaryEl.classList.add('hidden');
+                return;
+            }
+            summaryEl.classList.remove('hidden');
+
+            const scores = Object.values(grantRelevanceScores);
+            const scored = scores.length;
+            const avg = scored > 0 ? Math.round(scores.reduce((a,b) => a+b, 0) / scored) : 0;
+            const highConf = scores.filter(s => s > 80).length;
+
+            document.getElementById('aiScored').innerText = scored;
+            document.getElementById('aiAvgScore').innerText = avg + '%';
+            document.getElementById('aiHighConf').innerText = highConf;
+        }
+
+        function getRelevanceScore(grantId) {
+            return grantRelevanceScores[grantId] !== undefined ? grantRelevanceScores[grantId] : null;
+        }
+
+        function hasOrgProfile() {
+            const profile = JSON.parse(localStorage.getItem('orgProfile') || 'null');
+            return !!(profile && profile.mission && profile.mission.trim().length > 0);
+        }
+
+        // ============================================
         // STATE MANAGEMENT & LOCAL STORAGE
         // ============================================
         let currentView = 'discover';
@@ -1865,7 +2471,7 @@
         }
 
         function performSearch(keywords, scope) {
-            const results = GRANT_DB.filter(grant => {
+            let results = GRANT_DB.filter(grant => {
                 // Scope Check
                 const scopeMatch = (scope === 'ALL') || (grant.scope === 'FED') || (grant.scope === scope) || (grant.scope === 'ALL');
                 if(!scopeMatch) return false;
@@ -1876,9 +2482,32 @@
                 return keywordMatch;
             });
 
-            log(`Scan complete. Found ${results.length} matching grants.`, "success");
-            matchCount.innerText = results.length;
+            // Apply relevance min filter if profile exists
+            if (hasOrgProfile() && relevanceMinFilter > 0) {
+                results = results.filter(g => (getRelevanceScore(g.id) || 0) >= relevanceMinFilter);
+            }
 
+            // Sort by relevance if profile exists
+            if (hasOrgProfile()) {
+                results.sort((a, b) => (getRelevanceScore(b.id) || 0) - (getRelevanceScore(a.id) || 0));
+            }
+
+            log(`Scan complete. Found ${results.length} matching grants.`, "success");
+
+            // Log AI scoring info
+            if (hasOrgProfile()) {
+                const scored = Object.keys(grantRelevanceScores).length;
+                log(`[AI] Computed relevance scores for ${scored} grants against org profile`, "success");
+                if (results.length > 0) {
+                    const topGrant = results[0];
+                    const topScore = getRelevanceScore(topGrant.id) || 0;
+                    log(`[AI] Top match: ${topGrant.title} (${topScore}% relevance)`, "success");
+                }
+                const highConf = Object.values(grantRelevanceScores).filter(s => s > 80).length;
+                log(`[AI] ${highConf} grants scored above 80% confidence threshold`, "success");
+            }
+
+            matchCount.innerText = results.length;
             renderGrants(results);
         }
 
@@ -1894,6 +2523,11 @@
             let filtered = tracked;
             if (activeFilters.status !== 'all') {
                 filtered = tracked.filter(g => trackedGrants[g.id].status === activeFilters.status);
+            }
+
+            // Sort by relevance if profile exists
+            if (hasOrgProfile()) {
+                filtered.sort((a, b) => (getRelevanceScore(b.id) || 0) - (getRelevanceScore(a.id) || 0));
             }
 
             if (filtered.length === 0) {
@@ -1927,11 +2561,33 @@
                 const typeBadge = grant.type === 'fed' ? 'badge-fed' :
                                  grant.type === 'prov' ? 'badge-prov' : 'badge-corp';
 
+                // Relevance badge
+                const score = getRelevanceScore(grant.id);
+                let relevanceBadgeHTML = '';
+                if (score !== null) {
+                    let relClass = 'relevance-low';
+                    if (score > 80) relClass = 'relevance-high';
+                    else if (score >= 50) relClass = 'relevance-mid';
+                    relevanceBadgeHTML = `<span class="relevance-badge ${relClass}">MATCH: ${score}%</span>`;
+                }
+
+                // Recommended badge: show on tracked view for untracked grants >85%
+                let recommendedHTML = '';
+                if (currentView === 'tracked' && !isTracked && score !== null && score > 85) {
+                    recommendedHTML = '<span class="badge-recommended">RECOMMENDED</span>';
+                }
+                // Also show recommended in discover view for untracked grants >85%
+                if (currentView === 'discover' && !isTracked && score !== null && score > 85) {
+                    recommendedHTML = '<span class="badge-recommended">RECOMMENDED</span>';
+                }
+
                 card.innerHTML = `
                     <div class="card-header">
                         <div class="card-badges">
                             <span class="card-badge ${typeBadge}">${grant.scope}</span>
                             ${deadlineHTML}
+                            ${relevanceBadgeHTML}
+                            ${recommendedHTML}
                         </div>
                     </div>
 
@@ -2062,9 +2718,18 @@
         }
 
         function downloadJSON() {
+            const trackedData = {};
+            GRANT_DB.filter(g => trackedGrants[g.id]).forEach(grant => {
+                trackedData[grant.id] = {
+                    ...trackedGrants[grant.id],
+                    relevanceScore: getRelevanceScore(grant.id)
+                };
+            });
+
             const data = {
-                tracked: trackedGrants,
+                tracked: trackedData,
                 notes: grantNotes,
+                relevanceScores: grantRelevanceScores,
                 exportedAt: new Date().toISOString()
             };
 
@@ -2082,13 +2747,15 @@
         function downloadCSV() {
             const tracked = GRANT_DB.filter(g => trackedGrants[g.id]);
 
-            let csv = 'Agency,Title,Amount,Deadline,Status,Scope,Link,Notes\n';
+            let csv = 'Agency,Title,Amount,Deadline,Status,Scope,Link,Notes,RelevanceScore\n';
 
             tracked.forEach(grant => {
                 const status = trackedGrants[grant.id].status;
                 const notes = (grantNotes[grant.id] || '').replace(/"/g, '""');
+                const relScore = getRelevanceScore(grant.id);
+                const relScoreStr = relScore !== null ? relScore : '';
 
-                csv += `"${grant.agency}","${grant.title}","${grant.amount}","${grant.deadline}","${status}","${grant.scope}","${grant.link}","${notes}"\n`;
+                csv += `"${grant.agency}","${grant.title}","${grant.amount}","${grant.deadline}","${status}","${grant.scope}","${grant.link}","${notes}","${relScoreStr}"\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv' });
@@ -2135,9 +2802,126 @@
         }
 
         // ============================================
+        // ORGANIZATION PROFILE MANAGEMENT
+        // ============================================
+        function toggleProfile() {
+            const body = document.getElementById('profileBody');
+            const arrow = document.getElementById('profileArrow');
+            body.classList.toggle('open');
+            arrow.classList.toggle('open');
+        }
+
+        // Program area tag click handlers
+        document.querySelectorAll('#programAreaTags .profile-tag').forEach(tag => {
+            tag.addEventListener('click', () => {
+                tag.classList.toggle('selected');
+            });
+        });
+
+        // Relevance filter chip handlers
+        document.querySelectorAll('#relevanceFilters .relevance-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('#relevanceFilters .relevance-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                relevanceMinFilter = parseInt(chip.dataset.min) || 0;
+
+                // Re-render current view
+                if (currentView === 'discover') {
+                    runMission();
+                } else {
+                    showTrackedGrants();
+                }
+            });
+        });
+
+        function saveOrgProfile() {
+            const mission = document.getElementById('orgMission').value.trim();
+            const orgType = document.getElementById('orgType').value;
+            const budget = document.getElementById('orgBudget').value;
+
+            // Collect selected program areas
+            const programAreas = [];
+            document.querySelectorAll('#programAreaTags .profile-tag.selected').forEach(tag => {
+                programAreas.push(tag.dataset.area);
+            });
+
+            // Collect selected provinces
+            const provinces = [];
+            document.querySelectorAll('#provinceGrid input[type="checkbox"]:checked').forEach(cb => {
+                provinces.push(cb.value);
+            });
+
+            const profile = {
+                mission: mission,
+                programAreas: programAreas,
+                orgType: orgType,
+                budget: budget,
+                provinces: provinces,
+                savedAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('orgProfile', JSON.stringify(profile));
+            log('[AI] Organization profile saved. Computing relevance scores...', 'success');
+
+            // Recompute scores
+            computeRelevanceScores();
+
+            // Re-render current view
+            if (currentView === 'discover') {
+                runMission();
+            } else {
+                showTrackedGrants();
+            }
+        }
+
+        function loadOrgProfile() {
+            const profile = JSON.parse(localStorage.getItem('orgProfile') || 'null');
+            if (!profile) return;
+
+            // Restore mission
+            if (profile.mission) {
+                document.getElementById('orgMission').value = profile.mission;
+            }
+
+            // Restore org type
+            if (profile.orgType) {
+                document.getElementById('orgType').value = profile.orgType;
+            }
+
+            // Restore budget
+            if (profile.budget) {
+                document.getElementById('orgBudget').value = profile.budget;
+            }
+
+            // Restore program areas
+            if (profile.programAreas) {
+                document.querySelectorAll('#programAreaTags .profile-tag').forEach(tag => {
+                    if (profile.programAreas.includes(tag.dataset.area)) {
+                        tag.classList.add('selected');
+                    }
+                });
+            }
+
+            // Restore provinces
+            if (profile.provinces) {
+                document.querySelectorAll('#provinceGrid input[type="checkbox"]').forEach(cb => {
+                    if (profile.provinces.includes(cb.value)) {
+                        cb.checked = true;
+                    }
+                });
+            }
+
+            // Compute scores on load
+            computeRelevanceScores();
+        }
+
+        // ============================================
         // AUTO-RUN ON LOAD
         // ============================================
         window.addEventListener('load', () => {
+            // Load saved org profile and compute scores
+            loadOrgProfile();
+
             setTimeout(() => {
                 runMission();
             }, 500);
